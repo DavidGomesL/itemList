@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import env from "react-dotenv";
 
 const ItemList = () => {
 
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    axios.get(${BASE_URL})
+    .then(response => setProducts(response.data))
+    .catch(error => console.log(error))
+  },[])
+
+  function deleteProduct (id){
+      axios.delete(`https://6657b1bb5c361705264599c7.mockapi.io/products/data/${id}`)
+      .then((() => setProducts(products.filter(product => product.id !== id))))
+      .catch(console.log("Error"))
+  }
 
   return (
     <div className="container mt-5">

@@ -1,7 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'
 
 const EditProduct = () => {
+
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [title,setTitle] = useState("")
+  const [price,setPrice] = useState("")
+  const [promotion,setPromotion] = useState("")
+  
+
+  useEffect(() => {
+    axios.get(`https://6657b1bb5c361705264599c7.mockapi.io/products/data/${id}`)
+    .then(response => {
+      const { title, price, promotion } = response.data;
+      setTitle(title);
+      setPrice(price);
+      setPromotion(promotion);})
+    .catch(error => console.log(error))
+  },[id])
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const newProduct = {title, price, promotion}
+    axios.put(`https://6657b1bb5c361705264599c7.mockapi.io/products/data/${id}`, newProduct)
+    .then(() => {
+      navigate('/')
+    })
+    .catch(error => console.log(error))
+  }
 
 
   return (
