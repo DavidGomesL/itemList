@@ -9,7 +9,7 @@ const ItemList = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    axios.get(${BASE_URL})
+    axios.get(`https://6657b1bb5c361705264599c7.mockapi.io/products/data`)
     .then(response => setProducts(response.data))
     .catch(error => console.log(error))
   },[])
